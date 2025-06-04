@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Page background */
+body {
+    background-color: #d0e6ff; /* light blue */
+}
+
+/* Card styling */
+.card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Top margin for card */
+.mt-50 {
+    margin-top: 50px;
+}

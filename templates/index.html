@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Predictor</title>
+
+    <!-- Your external stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- 🔥 Force background color with inline CSS -->
+    <style>
+        body {
+            background-color: #d0e6ff !important; /* Light blue */
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mt-50 {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="card mt-50" style="width: 100%">
+            <div class="card-header text-center">
+    <h1>AutoValuator</h1>
+    <p class="text-muted" style="font-size: 1.1rem; margin-top: -5px;">Know your car’s true worth in seconds.</p>
+</div>
+
+            <div class="card-body">
+                <div class="text-center">
+                    <h5>Please enter the details of your car below to get a predicted price:</h5>
+                </div>
+                <br>
+                <form method="post" name="Modelform" onsubmit="event.preventDefault(); send_data();">
+                    <div class="form-group col-md-10 mx-auto text-center">
+                        <label><b>Select the Name of Company:</b></label>
+                        <select class="form-control" id="company" name="company" onchange="load_car_models('company','car_models')" required>
+                            {% for company in companies %}
+                            <option value="{{ company }}">{{ company }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-10 mx-auto text-center">
+                        <label><b>Select the Model of Your Car:</b></label>
+                        <select class="form-control" id="car_models" name="car_models" required></select>
+                    </div>
+
+                    <div class="form-group col-md-10 mx-auto text-center">
+                        <label><b>Select Year of Purchase:</b></label>
+                        <select class="form-control" id="year" name="year" required>
+                            {% for year in years %}
+                            <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-10 mx-auto text-center">
+                        <label><b>Select the Fuel Type:</b></label>
+                        <select class="form-control" id="fuel_type" name="fuel_type" required>
+                            {% for fuel in fuel_types %}
+                            <option value="{{ fuel }}">{{ fuel }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-10 mx-auto text-center">
+                        <label><b>Please Enter the Distance (in KMs):</b></label>
+                        <input type="text" class="form-control" id="kilo_driven" name="kilo_driven" placeholder="e.g. 35000" required>
+                    </div>
+
+                    <div class="form-group col-md-10 mx-auto text-center">
+                        <button class="btn btn-primary form-control">Predict Price</button>
+                    </div>
+                </form>
+                <div class="text-center">
+                    <h4><span id="prediction"></span></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function load_car_models(company_id, car_model_id) {
+        const company = document.getElementById(company_id).value;
+        const car_model = document.getElementById(car_model_id);
+        car_model.innerHTML = "";
+
+        if (company === 'Select Company') return;
+
+        fetch(`/get_models/${company}`)
+            .then(response => response.json())
+            .then(models => {
+                models.forEach(model => {
+                    const newOption = document.createElement("option");
+                    newOption.value = model;
+                    newOption.textContent = model;
+                    car_model.appendChild(newOption);
+                });
+            });
+    }
+
+    function send_data() {
+        const fd = new FormData(document.querySelector('form'));
+
+        fetch('/predict', {
+            method: 'POST',
+            body: fd
+        })
+        .then(response => response.text())
+        .then(result => {
+            document.getElementById('prediction').innerText = "Prediction: PKR " + result;
+        })
+        .catch(error => {
+            document.getElementById('prediction').innerText = "Error in prediction!";
+        });
+    }
+</script>
+
+</body>
+</html>
