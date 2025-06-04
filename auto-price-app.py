@@ -8,8 +8,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Load model and data
-model = pickle.load(open('LinearRegressionModel.pkl', 'rb'))
-car = pd.read_csv('Cleaned_Car_data.csv')
+model = pickle.load(open('XGBoostModel.pkl', 'rb'))
+car = pd.read_csv('pakwheels_Cleaned_Car_data.csv')
 
 # Create a mapping from company to its car models
 car_dict = car.groupby('company')['name'].unique().apply(list).to_dict()
