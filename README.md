@@ -49,7 +49,15 @@ The model is trained using XGBoost on features such as:
 ![image](https://github.com/user-attachments/assets/1bbf43bc-bc85-44fa-9f03-a72909ea1a27)
 
 
-## 🙋‍♂️ Author
+## Jupyter Notebook
+
+To explore the machine learning workflow, feature selection, preprocessing, model training, and evaluation, refer to the notebook:
+
+▶️ [Car_price.ipynb](Car_price.ipynb)
+
+
+
+## 
 
 Developed by Muhammad Ali Asjad — feel free to contribute or reach out for suggestions!
 
