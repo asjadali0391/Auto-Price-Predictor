@@ -11,7 +11,7 @@ AutoValuator is a Flask-based web application that predicts the resale price of 
 
 ## 🗂️ Project Structure
 
-\\\
+```
 .
 ├── auto-price-app.py              # Main Flask app
 ├── pakwheels\_Cleaned\_Car\_data.csv # Cleaned dataset
@@ -21,7 +21,7 @@ AutoValuator is a Flask-based web application that predicts the resale price of 
 │       └── style.css              # Custom styling
 ├── templates/
 │   └── index.html                 # Web interface
-\\\
+```
 
 ##     How to Run
 
